@@ -1,4 +1,6 @@
 version: 0.1.{build}
+environment:
+  GH_TOKEN: e31478fb308df45de7496830a4d9b74a62904905
 
 branches:
   only:
@@ -27,3 +29,22 @@ build_script:
   - yarn build
 
 test: off
+
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: NkdDsX3s+W+3gSQBnTYpmKhfl7G22fQQyCMWkbwVuW2gaS08TZ5f0fvceYOmK7Fl
+  repository: ShenJet/filename.ext
+  artifact: filename.ext
+  draft: true
+  prerelease: true
+  force_update: true
+
+notifications:
+- provider: Email
+  to:
+  - 985184097@qq.com
+  message: 在AppVeyor上的filename.ext项目已打包完毕
+  on_build_success: true
+  on_build_failure: false
+  on_build_status_changed: false

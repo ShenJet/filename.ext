@@ -2,6 +2,9 @@
 
 A desktop filename modify util . Hope to be helpful to you .
 
+[![Build status](https://ci.appveyor.com/api/projects/status/cpa505mtx0ylsdme?svg=true)](https://ci.appveyor.com/project/ShenJet/filename-ext-s7tjm)
+
+
 #### 开发源动力：
 
 使用pc的时候，经常遇到需要批量修改文件名的情况，例如以下几种：
