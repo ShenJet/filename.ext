@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 // import router from './router'
 
-import {Tabs,Tooltip,Icon,Input,List,Modal,Message} from 'ant-design-vue'
+import {Tabs,Tooltip,Icon,Input,List,Modal,Message,Radio} from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 
 Vue.use(Tabs)
@@ -13,6 +13,7 @@ Vue.use(Icon)
 Vue.use(Input)
 Vue.use(List)
 Vue.use(Modal)
+Vue.use(Radio)
 
 Vue.prototype.$message = Message
 

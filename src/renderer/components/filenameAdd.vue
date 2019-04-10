@@ -3,7 +3,7 @@
     <div class="info">
       <a-tooltip placement="bottom" >
         <template slot="title">
-            <span>本工具用于批量修改文件后缀名，例如：abc.png -> abc.jpg</span>
+            <span>本工具用于在文件名前后添加文字，例如：考研数学.mp4 -> 考研数学(张雪峰).mp4</span>
         </template>
         <a-icon type="info-circle" />
       </a-tooltip>
@@ -32,12 +32,18 @@
     </div>
     <div class="ext">
       <a-input-search
-      placeholder="png | docx | avi | txt..."
+      placeholder="new filename"
       @input="extInput"
       @search="confirmModify"
-      v-model='newext'
-      enterButton='确定修改'
+      v-model='extraStr'
+      enterButton='确定添加'
     />
+    </div>
+    <div>
+      <a-radio-group @change="whereindexChange" v-model="whereindex">
+        <a-radio :style="radioStyle" :value="1">前方插入</a-radio>
+        <a-radio :style="radioStyle" :value="2">后方插入</a-radio>
+    </a-radio-group>
     </div>
     <div class="list">
       <p class="head" ><a-icon type="bars" />待修改文件列表</p>
@@ -49,8 +55,8 @@
               <a-icon type="double-right" />
               修改为
               <a-icon type="double-right" /> 
-              </span> {{item.nameBeforeExt}}
-              <span style="color:deeppink">.{{newext}}</span>
+              </span> 
+              <span style="color:deeppink">{{item.newname}}</span>
               <span>
                 <!-- <p>old:{{item.path}}</p> -->
                 <p>新路径:{{item.newpath}}</p>
@@ -69,7 +75,7 @@
         style="width:400px;"
         :width='400'
       >
-        <p>确定将所有文件后缀名改为{{newext}}?</p>
+        <p>确定将所有文件名改为{{extraStr}}?</p>
       </a-modal>
     </div>
   </div>
@@ -79,17 +85,27 @@
 import path from 'path'
 import fs from 'fs'
 export default {
-  name: "ExtChange",
+  name: "filenameMod",
   data() {
     return {
       msg: "",
-      newext:'newExtension',
+      extraStr:'someString',//extraStr
       fileList: {}, //{}
-      fileArray: [],
-      modalVisible: false
+      fileArray: [], //{}
+      modalVisible: false,
+      whereindex: 1,
+      radioStyle: {
+        display: 'block',
+        height: '30px',
+        lineHeight: '30px',
+      },
     };
   },
   methods: {
+    whereindexChange(e){
+      console.log(this.whereindex);
+      this.preview()
+    },
     filedrop(e) {
       var self = this
       e.preventDefault();
@@ -101,71 +117,34 @@ export default {
       //   self.fileList.push(f)
       // }
       // this.$nextTick(function () {
-        this.preview()
+      this.preview()
       // })
     },
     preview(){
       this.fileArray = []
       for (let f of this.fileList) {
         console.log("File path:", f.path);
-                
+        let oldname = f.name
+        let oldpath = f.path        
         let ext = path.extname(f.path)
-        let filepath = f.path
-        let filename = f.name
-        // console.log('path:',filepath)
-        // console.log('ext:',ext)
-        f.ext = ext
-        var newpath = ''
-        var newname = ''
-        var  pathBeforeExt = ''
-        var  nameBeforeExt = ''
-        if(!ext && filepath.substr(-1) === '.'){
-          newpath = `${f.path}${this.newext}`
-          newname = `${f.name}${this.newext}`
-          pathBeforeExt = filepath.replace( /\.$/, '')
-          nameBeforeExt = filename.replace( /\.$/, '')
-        }else if(!ext && filepath.substr(-1) !== '.'){
-          newpath = `${f.path}.${this.newext}`
-          newname = `${f.name}.${this.newext}`
-          pathBeforeExt = filepath
-          nameBeforeExt = filename
-        }else{
-          let exp = new RegExp( `${ext}$`);
-          // console.log(exp);
-          let temppath = f.path.replace( exp, '')
-          let tempname = f.name.replace( exp, '')
-          // console.log('去除后缀的文件名：', temppath);
-          newpath = `${temppath}.${this.newext}`
-          newname = `${tempname}.${this.newext}`
-          // console.log('新路径：', newpath);
-          // console.log('新文件名：', newname);
-          pathBeforeExt = temppath
-          nameBeforeExt = tempname
-        }
-        // f.newpath = newpath
-        // f.newname = newname
-        // f.pathBeforeExt = pathBeforeExt
-        // f.nameBeforeExt = nameBeforeExt
-        console.log('Befo path:', pathBeforeExt);
-        
+        let oldname_noext = f.name.replace(ext, '')
+
+        let newname = this.whereindex==1?`${this.extraStr}${oldname}`:`${oldname_noext}${this.extraStr}${ext}`;
+        let newpath = oldpath.replace(oldname, newname)
+
         this.$set(f, 'newpath', newpath)
         this.$set(f, 'newname', newname)
-        this.$set(f, 'pathBeforeExt', pathBeforeExt)
-        this.$set(f, 'nameBeforeExt', nameBeforeExt)
 
         let obj = {
-          path:filepath,
-          name:filename,
-          newpath:newpath,
-          newname:newname,
-          nameBeforeExt:nameBeforeExt,
-          pathBeforeExt:pathBeforeExt,
+          path: f.path,
+          name: f.name,
+          newpath: newpath,
+          newname: newname,
         }
         this.fileArray.push(obj)
       }
-      
-      console.log(this.fileArray);
       // console.log(this.fileList);
+      console.log(this.fileArray);
     },
     filedragover(e) {
       e.preventDefault();
@@ -173,7 +152,7 @@ export default {
       // this.mouseon
     },
     extInput(){
-      console.log(this.newext);
+      // console.log(this.extraStr);
       this.preview()
       // console.log(this.fileList);
     },
@@ -189,7 +168,7 @@ export default {
         fs.renameSync(v.path, v.newpath)
       })
       this.modalVisible = false
-      this.$message.success('后缀名已修改成功')
+      this.$message.success('文件名已修改')
       this.fileList = {}
       this.fileArray = []
     }

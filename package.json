@@ -1,9 +1,9 @@
 {
   "name": "filename.ext",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "ShenJet <985184097@qq.com>",
-  "description": "filename extension manage",
-  "license": null,
+  "description": "filename util",
+  "license": "Apache Licene 2.0",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -18,7 +18,7 @@
   },
   "build": {
     "productName": "filename.ext",
-    "appId": "com.example.yourapp",
+    "appId": "com.example.filename.ext",
     "directories": {
       "output": "build"
     },

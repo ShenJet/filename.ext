@@ -18,11 +18,12 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    width: 600,
+    height: 660,
     useContentSize: true,
-    width: 1000
+    // frame: false //无边框和菜单   
   })
-
+  mainWindow.setMenu(null)
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
