@@ -2,9 +2,7 @@
 
 A desktop filename modify util . Hope to be helpful to you .
 
-
-
-#### 开发原动力：
+#### 开发源动力：
 
 使用pc的时候，经常遇到需要批量修改文件名的情况，例如以下几种：
 
@@ -20,8 +18,6 @@ A desktop filename modify util . Hope to be helpful to you .
 
 要么就是临时写个脚本，批量跑一跑，可能还会写出个Bug导致文件出问题 :D
 
-
-
 基于以上需求和痛点，决定基于Electron+Ant Design开发一款桌面用文件名处理小工具，暂且就叫filename.ext
 
 #### 开发环境：
@@ -30,23 +26,17 @@ A desktop filename modify util . Hope to be helpful to you .
 Windows 10
 ```
 
-  
-
 #### 前端框架：
 
 ```
 Vue + Ant Design
 ```
 
-
-
 #### 运行：
 
 ```
-   直接下载.exe文件安装
+   直接下载.exe文件安装
    开发者：npm start
 ```
 
 ---
-
-
