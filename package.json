@@ -5,6 +5,7 @@
   "description": "filename util",
   "license": "Apache Licene 2.0",
   "main": "./dist/electron/main.js",
+  "repository":"git@github.com:ShenJet/filename.ext.git",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
