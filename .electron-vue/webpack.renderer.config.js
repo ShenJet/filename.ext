@@ -19,9 +19,7 @@ const { VueLoaderPlugin } = require('vue-loader')
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-let whiteListedModules = ['vue' , 'vue-router', 'axios', 'vuex', 'vue-electron', 'ant-design-vue', 
-'vue-template-compiler',
-'@ant-design/icons'
+let whiteListedModules = ['vue' , 'vue-router', 'axios', 'vuex', 'vue-electron', 'ant-design-vue'
 ]
 
 
