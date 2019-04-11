@@ -1,20 +1,13 @@
 version: 0.1.{build}
-environment:
-  GH_TOKEN: 1910184a7940fb9a713551ce850471a5af83090a
 
 branches:
   only:
     - master
 
 image: Visual Studio 2017
+
 platform:
   - x64
-
-cache:
-  - node_modules
-  - '%APPDATA%\npm-cache'
-  - '%USERPROFILE%\.electron'
-  - '%USERPROFILE%\AppData\Local\Yarn\cache'
 
 init:
   - git config --global core.autocrlf input
